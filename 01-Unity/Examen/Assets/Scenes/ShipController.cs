@@ -25,22 +25,7 @@ public class ShipController : MonoBehaviour
     }
     
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Treasure"))
-        {
-            Debug.Log("Tesoros recogidos: " + (++treasureCount));
-            
-            // Aumentar el peso (gravedad) del barco
-            currentGravity = baseGravity + (treasureCount * gravityIncrement);
-            _rigidbody2D.gravityScale = currentGravity;
-
-            Destroy(collision.gameObject); // Destruir el tesoro
-        }
-        
-        
-        
-    }
+   
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -63,6 +48,17 @@ public class ShipController : MonoBehaviour
             {
                 Debug.Log("No hay tesoros para entregar.");
             }
+        }
+        
+        if (other.gameObject.CompareTag("Treasure"))
+        {
+            Debug.Log("Tesoros recogidos: " + (++treasureCount));
+            
+            // Aumentar el peso (gravedad) del barco
+            currentGravity = baseGravity + (treasureCount * gravityIncrement);
+            _rigidbody2D.gravityScale = currentGravity;
+
+            Destroy(other.gameObject); // Destruir el tesoro
         }
     }
 }
